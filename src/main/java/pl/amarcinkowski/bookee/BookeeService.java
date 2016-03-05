@@ -9,6 +9,13 @@ public class BookeeService {
 	public static final String API = "books";
 
 	public BookeeService() {
+		port(PORT);
+		staticFileLocation("public");
+		get(API + "/", (res, req) -> "all");
+		get(API + "//:id", (res, req) -> "one");
+		post(API + "/", (res, req) -> "done");
+		delete(API + "/:id", (res, req) -> "removed");
+		put(API + "/:id", (res, req) -> "updated");
 	}
 
 }
