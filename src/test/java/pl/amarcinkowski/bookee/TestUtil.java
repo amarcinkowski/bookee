@@ -63,7 +63,8 @@ public class TestUtil {
 	}
 
 	public static String getUrl(String... params) {
-		String url = String.format("http://localhost:%s/%s", BookeeService.PORT, urilze(params));
+		String url = String.format("http://%s:%s/%s/%s", BookeeService.DOMAIN, BookeeService.PORT, BookeeService.API,
+				urilze(params));
 		logger.debug(String.format("%6s %s", "ADR", url));
 		return url;
 	}
