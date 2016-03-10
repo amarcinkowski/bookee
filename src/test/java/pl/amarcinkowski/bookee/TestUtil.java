@@ -18,6 +18,7 @@ public class TestUtil {
 		HttpURLConnection connection = null;
 		try {
 			URL url = new URL(targetURL);
+			logger.debug(String.format("%6s %s", "ADR", url));
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setUseCaches(false);
 			connection.setDoOutput(true);
@@ -48,25 +49,6 @@ public class TestUtil {
 		Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 		root.setLevel(Level.INFO);
 		logger.setLevel(Level.DEBUG);
-	}
-
-	private static String urilze(String... params) {
-		StringBuilder builder = new StringBuilder();
-		for (String param : params) {
-			builder.append(param);
-			builder.append("/");
-		}
-		if (builder.length() > 1) {
-			builder.deleteCharAt(builder.length() - 1);
-		}
-		return builder.toString();
-	}
-
-	public static String getUrl(String... params) {
-		String url = String.format("http://%s:%s/%s/%s", BookeeService.DOMAIN, BookeeService.PORT, BookeeService.API,
-				urilze(params));
-		logger.debug(String.format("%6s %s", "ADR", url));
-		return url;
 	}
 
 }

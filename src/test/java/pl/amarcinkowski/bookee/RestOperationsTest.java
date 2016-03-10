@@ -1,13 +1,12 @@
 package pl.amarcinkowski.bookee;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.amarcinkowski.bookee.TestUtil.*;
+import static pl.amarcinkowski.bookee.JsonUtil.toJson;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import pl.amarcinkowski.bookee.Main;
 import spark.Spark;
 
 public class RestOperationsTest {
@@ -37,32 +36,40 @@ public class RestOperationsTest {
 
 	@Test
 	public void testGet() {
-		String response = TestUtil.getResponse(getUrl("1"), GET, null);
-		assertThat(response).isEqualTo("one");
+		String response = TestUtil.getResponse(BookeeService.getUrl("1"), GET, null);
+		assertThat(response).isEqualTo(toJson(new Object[] { "one" }));
 	}
 
 	@Test
 	public void testGetAll() {
-		String response = TestUtil.getResponse(getUrl(), GET, null);
-		assertThat(response).isEqualTo("all");
+		String response = TestUtil.getResponse(BookeeService.getUrl(), GET, null);
+		assertThat(response).isEqualTo(toJson(new Object[] { "all" }));
 	}
 
 	@Test
 	public void testPost() {
-		String response = TestUtil.getResponse(getUrl(), POST, null);
-		assertThat(response).isEqualTo("done");
+		String response = TestUtil.getResponse(BookeeService.getUrl(), POST, null);
+		assertThat(response).isEqualTo(toJson(new Object[] { "done" }));
 	}
 
 	@Test
 	public void testDelete() {
-		String response = TestUtil.getResponse(getUrl("1"), DELETE, null);
-		assertThat(response).isEqualTo("removed");
+		String response = TestUtil.getResponse(BookeeService.getUrl("1"), DELETE, null);
+		assertThat(response).isEqualTo(toJson(new Object[] { "removed" }));
 	}
 
 	@Test
 	public void testUpdate() {
-		String response = TestUtil.getResponse(getUrl("1"), PUT, null);
-		assertThat(response).isEqualTo("updated");
+		String response = TestUtil.getResponse(BookeeService.getUrl("1"), PUT, null);
+		assertThat(response).isEqualTo(toJson(new Object[] { "updated" }));
+	}
+
+	@Test
+	public void testOther() {
+		for (String s : new String[] { "PATCH", "OPTIONS", "TRACE" }) {
+			String response = TestUtil.getResponse(BookeeService.getUrl("1"), s, null);
+			assertThat(response).isNull();
+		}
 	}
 
 }
